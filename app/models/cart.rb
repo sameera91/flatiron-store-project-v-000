@@ -5,21 +5,24 @@ class Cart < ActiveRecord::Base
 
   def total
     total = 0
-    self.items.collect do |item|
-      total = total + item.price
+    self.line_items.collect do |line_item|
+      item = Item.find_by(id: line_item.item_id)
+      total = total + (item.price*line_item.quantity)
     end
     total
   end
 
   def add_item(item)
-    if !self.items.include?(Item.find_by(id: item))
-      line_item = line_items.new
-      line_item.item_id = item
-    else
-      line_item = line_items.find_by(item_id: item)
-      line_item.update(item_id: item)
-    end
+
+    line_item = self.line_items.find_by(item_id: item)
+     if line_item
+       quantity = line_item.quantity+1
+      line_item.update(quantity: quantity)
+     else
+       self.line_items.build(item_id: item, quantity: 1)
+
+     end
     line_item
-  end
+  end  
 
 end
