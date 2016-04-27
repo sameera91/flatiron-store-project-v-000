@@ -6,14 +6,4 @@ class Item < ActiveRecord::Base
   def self.available_items
     self.where("inventory > 0")
   end
-=begin
-    binding.pry
-    item = Item.find_by(self.item_id)
-    available_items = []
-    if !self.inventory.nil?
-      available_items << self
-    end
-    available_items
-  end
-=end
 end

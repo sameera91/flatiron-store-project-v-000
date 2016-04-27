@@ -14,10 +14,5 @@ class CartsController < ApplicationController
  
     current_user.current_cart = nil
     redirect_to cart_path(@cart)
-=begin
-    @cart = Cart.find(params[:id])
-    @cart.status = "submitted" 
-    redirect_to cart_path(@cart)
-=end
   end
 end
